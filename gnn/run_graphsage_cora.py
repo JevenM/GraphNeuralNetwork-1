@@ -29,6 +29,7 @@ if __name__ == "__main__":
     for num in neigh_number:
         sample_neigh, sample_neigh_len = sample_neighs(
             G, indexs, num, self_loop=False)
+        sample_neigh = np.asarray(sample_neigh, dtype=np.float32)
         model_input.extend([sample_neigh])
         neigh_maxlen.append(max(sample_neigh_len))
 
@@ -67,4 +68,4 @@ if __name__ == "__main__":
     embedding_model = Model(model.input, outputs=Lambda(lambda x: gcn_embedding.output)(model.input))
     embedding_weights = embedding_model.predict(model_input, batch_size=A.shape[0])
     y  = np.genfromtxt("{}{}.content".format('../data/cora/', 'cora'), dtype=np.dtype(str))[:, -1]
-    plot_embeddings(embedding_weights, np.arange(A.shape[0]), y)
+    plot_embeddings(embedding_weights, np.arange(A.shape[0]), y, "graphsage_cora_graph.png")

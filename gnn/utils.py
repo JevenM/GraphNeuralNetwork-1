@@ -1,3 +1,4 @@
+import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np
 import networkx as nx
@@ -170,7 +171,7 @@ def preprocess_adj(adj, symmetric=True):
     return adj
 
 
-def plot_embeddings(embeddings, X, Y):
+def plot_embeddings(embeddings, X, Y, name):
 
     emb_list = []
     for k in X:
@@ -188,7 +189,8 @@ def plot_embeddings(embeddings, X, Y):
     for c, idx in color_idx.items():
         plt.scatter(node_pos[idx, 0], node_pos[idx, 1], label=c)
     plt.legend()
-    plt.show()
+    plt.savefig(fname=name)
+    # plt.show()
 
 
 def preprocess_features(features):

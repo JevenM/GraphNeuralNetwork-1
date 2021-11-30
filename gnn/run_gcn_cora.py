@@ -48,7 +48,7 @@ if __name__ == "__main__":
     model.fit(model_input, y_train, sample_weight=train_mask, validation_data=val_data,
               batch_size=A.shape[0], epochs=NB_EPOCH, shuffle=False, verbose=2, callbacks=[mc_callback])
     # test
-    model.load_weights('./best_model.h5')
+    model.load_weights('best_model.h5')
     eval_results = model.evaluate(
         model_input, y_test, sample_weight=test_mask, batch_size=A.shape[0])
     print('Done.\n'
@@ -59,4 +59,4 @@ if __name__ == "__main__":
     embedding_model = Model(model.input, outputs=Lambda(lambda x: model.layers[-1].output)(model.input))
     embedding_weights = embedding_model.predict(model_input, batch_size=A.shape[0])
     y  = np.genfromtxt("{}{}.content".format('../data/cora/', 'cora'), dtype=np.dtype(str))[:, -1]
-    plot_embeddings(embedding_weights, np.arange(A.shape[0]), y)
+    plot_embeddings(embedding_weights, np.arange(A.shape[0]), y, "gcn_cora_graph.png")
